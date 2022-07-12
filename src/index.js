@@ -1,28 +1,83 @@
-require('dotenv').config();
-// Require the necessary discord.js classes
-const { Client, Intents, DiscordAPIError } = require('discord.js');
-const Discord = require('discord.js');
-const { token } = require('./config.json');
+import DiscordJS, { Intents } from 'discord.js'
+import dotenv from 'dotenv'
 
-// Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-// const ms = new Discord.MessageCollector(channel, options);
-// When the client is ready, run this code (only once)
-client.once('ready', () => {
-    console.log('Ready!');  
+dotenv.config();
+
+const tiles = [
+    ' ',
+    'x',
+];
+
+
+
+const gridLength = 16;
+const gridHeight = 16;
+let grid = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
+
+
+const makeGrid = () => {
+    grid = [];
+    for(let i = 0;i<gridHeight;i++){
+        grid.push([]);
+        for(let j = 0;j<gridLength;j++){
+           grid[grid.length - 1].push(0); 
+        }
+    }
+}
+
+
+const drawGrid = () => {
+    let ret = '';
+    grid.forEach(row => {
+        row.forEach(cell => {
+            ret = ret + `[ ${tiles[cell]} ]`;
+        })
+        ret = ret + '\n';
+    })
+    return ret;
+}
+
+
+
+const client = new DiscordJS.Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES
+    ]
 });
 
-client.channels.fetch('704101162693034076/935742119505698846')
-    .then(channel => {
-        console.log(channel.name)
-        const filter = m => m.content.includes('');
-        const collector = channel.createMessageCollector({filter, time: 15000});
-        collector.on('collect', e => {
-            console.log(e);
-        })
-    })
-    .catch(console.error);
+client.on('ready', () => {
+    console.log('the bot is ready');
+});
 
 
+client.on('messageCreate', (msg) => {
+
+    if(msg.content === 'printGrid'){
+        msg.channel.send(drawGrid());
+    }
+
+
+
+
+
+});
 
 client.login(process.env.TOKEN);

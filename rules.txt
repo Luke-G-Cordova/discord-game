@@ -1,0 +1,21 @@
+3 hearts per player
+A player gains an action point every day.
+Action points grant actions. Actions are as follows
+    - a player can move 1 space per action point
+    - a player can shoot one other player within range per action point
+    - a player can give another player within range an action point
+    - a player can upgrade range with action points
+
+This is not a turn based game, you can spend action points whenever you want
+If you loose all 3 hearts you are dead and become part of the jury
+
+The jury can grant alive players extra action points. 
+3 votes from the jury grants an extra action point for a player.
+The vote takes place once per day.
+
+Players start at random places on the board at the beginning of the game. Preferably not in the middle.
+Players start with a max range of 1 at the beginning of the game.
+
+
+The game is finished when there is one peron left alive. This person has won the game.
+

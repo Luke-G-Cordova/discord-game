@@ -2,7 +2,8 @@
   "name": "d_game",
   "version": "1.0.0",
   "description": "game for discord chat",
-  "main": "concept.js",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
     "bot": "node src/index.js",
     "dev": "nodemon src/index.js"
