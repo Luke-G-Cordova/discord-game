@@ -2,11 +2,12 @@
   "name": "d_game",
   "version": "1.0.0",
   "description": "game for discord chat",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
     "bot": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon ./src/index.js",
+    "testImg": "node src/pngtest.js"
   },
   "repository": {
     "type": "git",
