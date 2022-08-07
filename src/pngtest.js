@@ -15,6 +15,10 @@ import {
   seven,
   eight,
   nine,
+  pp,
+  chonk,
+  lump,
+  mario
 } from "./visual_data/index.js";
 import { grid } from "./globals.js";
 var png = drawing(pngHold.PNG);
@@ -22,61 +26,84 @@ var png = drawing(pngHold.PNG);
 
 //life1=3x6 life2=8x5 life3=13x6
 const numberAssets = [zero, one, two, three, four, five, six, seven, eight, nine];
+// const colors = [
+//   [255, 255, 255, 255],
+//   [0, 0, 0, 255],
+//   [237, 26, 26, 255],
+//   [0, 255, 255, 255],
+//   [9, 222, 23, 255],
+//   [255, 255, 0, 255],
+//   [10, 17, 242, 255],
+// ];
+
 const colors = [
   [255, 255, 255, 255],
   [0, 0, 0, 255],
   [237, 26, 26, 255],
   [0, 255, 255, 255],
   [9, 222, 23, 255],
-  [255, 255, 0, 255],
-  [10, 17, 242, 255],
+  [243, 235, 9, 255],
+  [134, 9, 243, 255],
+  [0, 4, 255, 255],
+  [66, 32, 0, 255],
+  [242, 221, 174, 255],
 ];
-
-const cellSize = 20;
 
 export const drawGrid = (callback) => {
   fs.createReadStream("./src/blank_board.png")
     .pipe(new png({ filterType: 4 }))
     .on("parsed", async function () {
+
+      let cellSize = 800 / grid.length;
+      let pixelSize = cellSize/20;
+
       grid.forEach((row, i) => {
+
         row.forEach((cell, j) => {
           if (cell !== 0) {
             let index = cell -1;
-            let new_player;
-            if(index < 10){
-              new_player = mendAssets(numberAssets[index], 8, 11);
-            }else{
-              let digits = index.toString().split('');
-              let [left, right] = digits.map(Number);
-              new_player = mendAssets(numberAssets[left], 5, 11);
-              new_player = mendAssets(numberAssets[right], 10, 11, new_player);
-            }
-            let player = players[index];
-            if(player.lives >= 1){
-              new_player = mendAssets(life, 3, 6, new_player);
-            }
-            if(player.lives >= 2){
-              new_player = mendAssets(life, 8, 5, new_player);
-            }
-            if(player.lives == 3){
-              new_player = mendAssets(life, 13, 6, new_player);
-            }
+            let new_player = mendAssets(mario, 0, 0, mario);
+            // if(index < 10){
+            //   new_player = mendAssets(numberAssets[index], 8, 11, lump);
+            // }else{
+            //   let digits = index.toString().split('');
+            //   let [left, right] = digits.map(Number);
+            //   new_player = mendAssets(numberAssets[left], 5, 11);
+            //   new_player = mendAssets(numberAssets[right], 10, 11, new_player);
+            // }
+            // let player = players[index];
+            // if(player.lives >= 1){
+            //   new_player = mendAssets(life, 3, 6, new_player);
+            // }
+            // if(player.lives >= 2){
+            //   new_player = mendAssets(life, 8, 5, new_player);
+            // }
+            // if(player.lives == 3){
+            //   new_player = mendAssets(life, 13, 6, new_player);
+            // }
             for (let k = 0; k < new_player.length; k++) {
               for (let l = 0; l < new_player[k].length; l++) {
                 if (new_player[k][l] !== 0) {
-                  this.drawPixel(
-                    j * cellSize + l,
-                    i * cellSize + k,
-                    colors[new_player[k][l]]
-                  );
+
+                  // draw bigger pixels
+                  for(let n = 0;n<pixelSize;n++){
+                    for(let a = 0;a<pixelSize;a++){
+                      this.drawPixel(
+                        j * cellSize + ( l*pixelSize ) + n,
+                        i * cellSize + ( k*pixelSize ) + a,
+                        colors[new_player[k][l]]
+                      );
+                    }
+                  }
+
                 }
               }
             }
           }
 
           var topLeft = {
-            x: j * cellSize + cellSize,
-            y: i * cellSize + cellSize,
+            x: j * cellSize + 20,
+            y: i * cellSize + 20,
           };
           var topRight = { x: topLeft.x + cellSize, y: topLeft.y };
           var botRight = { x: topLeft.x + cellSize, y: topLeft.y + cellSize };
@@ -113,7 +140,8 @@ export const drawGrid = (callback) => {
       });
 
       await this.pack().pipe(fs.createWriteStream("./src/finished_board.png"));
-      callback();
+      setTimeout(callback, 1000);
+      
     });
 };
 

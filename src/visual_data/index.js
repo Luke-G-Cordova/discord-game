@@ -10,6 +10,10 @@ import eight from "./8.json" assert { type: 'json'};
 import nine from "./9.json" assert { type: 'json'};
 import life from "./life.json" assert { type: 'json'};
 import default_player from "./player_default.json" assert { type: 'json'};
+import pp from "./pp.json" assert { type: 'json'};
+import chonk from "./chonk.json" assert { type: 'json'};
+import lump from "./lump.json" assert { type: 'json'};
+import mario from "./mario.json" assert { type: 'json'};
 export {
   zero,
   one,
@@ -23,4 +27,8 @@ export {
   nine,
   default_player,
   life,
+  pp,
+  chonk,
+  lump,
+  mario
 };

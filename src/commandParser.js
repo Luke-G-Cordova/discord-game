@@ -41,6 +41,9 @@ export const parseCommand = (command) => {
     return null;
   }else if(parts[0] === "makejoin"){
     return parts;
+  }else if(parts[0] === "print"){
+    if(parts.length === 1)return parts;
+    return null;
   }
 
   return null;

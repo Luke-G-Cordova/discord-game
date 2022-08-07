@@ -19,18 +19,8 @@ const client = new Client({
 
 client.on("ready", () => {
   console.log("the bot is ready");
-  createGrid();
+  createGrid(5, 5);
 
-  for(let i = 0;i<10;i++){
-    players.push(
-      new Player({
-        username: `someName ${i}`,
-        x: Math.round(Math.random() * grid.length),
-        y: Math.round(Math.random() * grid[0].length),
-        index: players.length || 0
-      })
-    );
-  }
 });
 
 client.on("messageCreate", (msg) => {
@@ -107,6 +97,8 @@ client.on("messageCreate", (msg) => {
         break;
       case "makejoin":
         msg.channel.send('join');
+        break;
+      case "print":
         break;
     }
     sendGrid(msg);
